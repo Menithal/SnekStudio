@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c44wulwtgxh3k"
-path="res://.godot/imported/bone_node_constraint.svg-6e66d84dae2114aaa38ad7d77bdfdf88.ctex"
+uid="uid://cm0a8uctfjjd"
+path="res://.godot/imported/128x128.png-31ae4581b999cf60f2954586d4069f86.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/godot-vrm/node_constraint/icons/bone_node_constraint.svg"
-dest_files=["res://.godot/imported/bone_node_constraint.svg-6e66d84dae2114aaa38ad7d77bdfdf88.ctex"]
+source_file="res://Core/UI/Images/icons/128x128.png"
+dest_files=["res://.godot/imported/128x128.png-31ae4581b999cf60f2954586d4069f86.ctex"]
 
 [params]
 
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=2.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
