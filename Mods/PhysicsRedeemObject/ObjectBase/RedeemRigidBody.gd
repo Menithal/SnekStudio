@@ -29,12 +29,16 @@ class_name RedeemRigidBody
 @export var aim_at_avatar: bool = false
 ## Should the object look at towards the avatar? If yes, do not apply any spin,
 @export var look_at_avatar: bool = false
+@export var randomized_pitch: float = 0.2
+
+@export var collision_sound : AudioStream = null
 
 var attached_to_body = false
-var redeem_controller: RedeemNode = null;
+var redeem_controller: RedeemNode = null
 
 var _orig_parent = null
 var _impacted = false
+var _audio_stream_player: AudioStreamPlayer3D = null
 
 func _set_physics_active(active : bool):
 	if not active:
@@ -77,15 +81,11 @@ func create_collision_scene():
 	
 	var collide_object = collide_scene.instantiate()
 	
-	collide_scene.position = self.position
-	collide_scene.rotation = self.rotation
-	get_parent().append(collide_object) 
-	#get_parent().add_child(collide_scene)
-	#collide_scene.position = position
-	#collide_scene.rotation = rotation
+	get_parent().add_child(collide_object) 
+	collide_object.position = self.position
+	collide_object.rotation = self.rotation
 
 func _on_RigidBody_body_entered(body):
-	print("Some Collission spotted?")
 	if attached_to_body:
 		return
 	
@@ -116,10 +116,9 @@ func _on_RigidBody_body_entered(body):
 		# let the projectile fall down.
 		set_gravity_scale(1.0)
 	
-	# FIXME: Don't hardcode head rotation. Make it select the right bone!
 	if redeem_controller:
-		redeem_controller.add_head_impact_rotation(
-			(body.global_transform.inverse() * Transform3D(q)).basis.get_rotation_quaternion())
+		redeem_controller.scene_loader_node.add_head_impact_rotation(
+			(body.global_transform.inverse() * Transform3D(q)).basis.get_rotation_quaternion() )
 			
 	# If we have a post-impact animation defined, then reset the animation time
 	# to the beginning.
@@ -127,12 +126,17 @@ func _on_RigidBody_body_entered(body):
 	#if len(sprite_frames_after_impact):
 	#	_animation_time = 0.0
 	
-	if _impacted:
+	if not _impacted:
+		if _audio_stream_player != null:
+			get_parent().add_child(_audio_stream_player)
+		
 		if collide_scene != null:
 			create_collision_scene()
 			
-		if clear_on_collision == null:
-			self.queue_free()
+		if clear_on_collision:
+			freeze = true
+			visible = false
+			
 		
 		_impacted = true
 
@@ -181,22 +185,36 @@ func _find_total_aabb(node, indent=""):
 
 func _ready() -> void:
 	spin_damping = angular_damp
-	# Transferred these over from ThrownObject
-	#if redeem_controller:
-	#	redeem_controller.
+	# Make sure these are enabled and scripts are connected
+	contact_monitor = true
+	max_contacts_reported = 1
+	
+	if collision_sound != null:
+		_audio_stream_player = AudioStreamPlayer3D.new()
+		_audio_stream_player.name = "CollisionSoundNode"
+		_audio_stream_player.stream = collision_sound
+		_audio_stream_player.autoplay = true
+		_audio_stream_player.pitch_scale = 1.0 + (randf() * 2.0 - 1.0) * 0.2
+	# if the redeem in question doesnt have everything bound yet if
+	# someone new forgot to bind the connection
+	if not is_connected("body_entered", _on_RigidBody_body_entered):
+		connect("body_entered", _on_RigidBody_body_entered)
+
 	# Attempt to determine the max AABB of our visual models and use it as a
 	# guess for a radius for the sphere collider.
-	# 
+	
 	# FIXME: If we have an AABB maybe we should just do a box collider.
 	# FIXME: Work for sprites, too.
-	var max_aabb : AABB = _find_total_aabb(self)
-	if max_aabb != AABB():
-		if $CollisionShape.shape is SphereShape3D:
-			var collision_sphere = $CollisionShape.shape.duplicate()
-			$CollisionShape.shape = collision_sphere
-			var max_dim = max(
-				abs(max_aabb.position.x),
-				abs(max_aabb.position.y),
-				abs(max_aabb.position.x + max_aabb.size.x),
-				abs(max_aabb.position.y + max_aabb.size.y))
-			collision_sphere.set_radius(max_dim)
+	for child in get_children():
+		if child is CollisionShape3D:
+			var max_aabb : AABB = _find_total_aabb(self)
+			if max_aabb != AABB():
+				if child.shape is SphereShape3D:
+					var collision_sphere = child.shape.duplicate()
+					child.shape = collision_sphere
+					var max_dim = max(
+						abs(max_aabb.position.x),
+						abs(max_aabb.position.y),
+						abs(max_aabb.position.x + max_aabb.size.x),
+						abs(max_aabb.position.y + max_aabb.size.y))
+					collision_sphere.set_radius(max_dim)

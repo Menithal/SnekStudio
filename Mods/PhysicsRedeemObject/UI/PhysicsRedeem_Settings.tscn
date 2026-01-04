@@ -86,7 +86,7 @@ popup/item_2/id = 2
 popup/item_3/text = "LeftHand"
 popup/item_3/id = 3
 popup/item_4/text = "RightArm"
-popup/item_4/id = 3
+popup/item_4/id = 4
 
 [node name="Label_RedeemableList" type="Label" parent="."]
 layout_mode = 2

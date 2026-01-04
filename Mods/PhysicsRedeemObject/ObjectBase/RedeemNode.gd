@@ -10,8 +10,8 @@ class_name RedeemNode
 @export var remaining_lifetime : float = 5
 ## Offset or Radius from where the objects are dropped or thrown from..
 @export var spawn_randomized_offset: float = 0.1;
-## Target Bone for redeemable.
-@export var target_bone: String = "Head"
+# Target Bone for redeemable.
+var target_bone: String = "Head"
 ## Randomize thrown velocity
 @export var velocity_randomness: float = 0.2
 var avatar_reference: Skeleton3D = null
@@ -89,13 +89,8 @@ func set_redeem_rigid_body(redeem_rigid_body: RedeemRigidBody):
 
 
 func _ready():
-	
-	if $RedeemObjects == null:
-		printerr("RedeemNode: RedeemObjects does not exist. Use a template example such as Baguette or Trout for reference")
-		queue_free()
-		return
-	if $RedeemObjects.get_child_count() == 0:
-		printerr("RedeemNode: RedeemObjects does not contain children")
+	if get_child_count() == 0:
+		printerr("RedeemNode: does not contain children")
 		queue_free()
 		return
 	if avatar_reference == null:
@@ -108,7 +103,7 @@ func _ready():
 		return
 		
 	## Cycle through all children (including newly cloned ones!)
-	for child in $RedeemObjects.get_children():
+	for child in get_children():
 		if child is not RedeemRigidBody:
 			printerr ("RedeemNode: RedeemObjects does not contain expected RedeemRigidBody! Destroying {}.", child.name)
 			child.queue_free()

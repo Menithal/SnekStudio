@@ -78,20 +78,20 @@ func throw_random_object():
 
 	# Find something to throw out of the list of stuff to throw and instantiate
 	# it.
-	var bit_scene_path = selected_redeemables.pick_random()
+	var redeem_scene_path = selected_redeemables.pick_random()
 
 	var executable_path : String = OS.get_executable_path().get_base_dir()
-	if bit_scene_path.begins_with(executable_path):
-		bit_scene_path = bit_scene_path.substr(len(executable_path) + 1)
+	if redeem_scene_path.begins_with(executable_path):
+		redeem_scene_path = redeem_scene_path.substr(len(executable_path) + 1)
 
-	var bit_scene_packed = load(bit_scene_path)
-	if bit_scene_packed:
-		var bit_scene = bit_scene_packed.instantiate()
+	var redeem_scene_packed = load(redeem_scene_path)
+	if redeem_scene_packed:
+		var redeem_scene = redeem_scene_packed.instantiate()
 
-		_redeem_object_queue.append(bit_scene)
-		add_autodelete_object(bit_scene)
+		_redeem_object_queue.append(redeem_scene)
+		add_autodelete_object(redeem_scene)
 	else:
-		push_error("Failed to load scene for redeemable: ", bit_scene_path)
+		push_error("Failed to load scene for redeemable: ", redeem_scene_path)
 
 
 func add_head_impact_rotation(rot : Quaternion):
@@ -126,13 +126,15 @@ func _process(delta):
 		_head_impact_rotation_offset.slerp(Quaternion(0.0, 0.0, 0.0, 1.0), delta * impact_rotation_return_speed)
 
 func _physics_process(delta):
-	if _redeem_object_queue.size():
+	_redeem_object_cooldown -= delta
+	if _redeem_object_cooldown <= 0 and _redeem_object_queue.size() > 0:
 		# Reset cooldown.
 		_redeem_object_cooldown = _redeem_object_cooldown_max
 		
 		# Get the next object to throw off the queue.
 		var _redeem_scene = _redeem_object_queue[0]
 		_redeem_scene.avatar_reference = get_skeleton()
+		_redeem_scene.target_bone = target_bone
 		_redeem_scene.scene_loader_node = self # Add Reference of Redeem Controller 
 		_redeem_object_queue.pop_front()
 		add_child(_redeem_scene)
@@ -144,7 +146,7 @@ func save_settings():
 	settings["throws_per_bit"] = throws_per_bit
 	settings["redeem_name"] = redeem_name
 	settings["count_multiplier"] = count_multiplier
-	settings["target_bone"] = target_bone
+	settings["target_bone"] = _target_bones.find(target_bone)
 	settings["selected_redeemables"] = selected_redeemables.duplicate()
 	return settings
 
@@ -153,7 +155,8 @@ func load_settings(settings_dict):
 	throws_per_bit = settings_dict["throws_per_bit"]
 	redeem_name = settings_dict["redeem_name"]
 	count_multiplier = settings_dict["count_multiplier"]
-	target_bone = settings_dict["target_bone"]
+	
+	target_bone = _target_bones[settings_dict["target_bone"]]
 	selected_redeemables = []
 	for throwable in settings_dict["selected_redeemables"]:
 		selected_redeemables.append(throwable)

@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://tf7bffaimavb"]
+[gd_scene load_steps=7 format=3 uid="uid://tf7bffaimavb"]
 
 [ext_resource type="Script" uid="uid://ceymurcbte5tw" path="res://Mods/PhysicsRedeemObject/ObjectBase/RedeemNode.gd" id="1_hi0qa"]
 [ext_resource type="Script" uid="uid://b047iyo00jegd" path="res://Mods/PhysicsRedeemObject/ObjectBase/RedeemRigidBody.gd" id="2_8uv06"]
 [ext_resource type="PackedScene" uid="uid://ljvychvf5pka" path="res://Mods/PhysicsRedeemObject/Objects/Baguette/BaguetteWhole.glb" id="2_c4gmb"]
 [ext_resource type="PackedScene" uid="uid://0g3jbtihcu4c" path="res://Mods/PhysicsRedeemObject/Objects/Baguette/Baguette_OnCollision.tscn" id="3_e781m"]
+[ext_resource type="AudioStream" uid="uid://cnjikfjvv01jd" path="res://Mods/PhysicsRedeemObject/Objects/Baguette/Crumble.wav" id="4_xyq5a"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8uv06"]
 size = Vector3(0.12, 0.09, 0.8)
@@ -12,19 +13,23 @@ size = Vector3(0.12, 0.09, 0.8)
 script = ExtResource("1_hi0qa")
 metadata/_custom_type_script = "uid://ceymurcbte5tw"
 
-[node name="RedeemObjects" type="Node3D" parent="."]
-
-[node name="Baguette_RigidBody" type="RigidBody3D" parent="RedeemObjects"]
+[node name="Baguette_RigidBody" type="RigidBody3D" parent="."]
 collision_layer = 0
+contact_monitor = true
+max_contacts_reported = 5
 script = ExtResource("2_8uv06")
+sticky = false
+stickiness_chance = 0.0
 random_spin_amount = 2.0
 collide_scene = ExtResource("3_e781m")
+clear_on_collision = true
+collision_sound = ExtResource("4_xyq5a")
 metadata/_custom_type_script = "uid://b047iyo00jegd"
 
-[node name="CollisionShape" type="CollisionShape3D" parent="RedeemObjects/Baguette_RigidBody"]
+[node name="CollisionShape" type="CollisionShape3D" parent="Baguette_RigidBody"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.015158653, 0)
 shape = SubResource("BoxShape3D_8uv06")
 
-[node name="BaguetteModel" parent="RedeemObjects/Baguette_RigidBody" instance=ExtResource("2_c4gmb")]
+[node name="BaguetteModel" parent="Baguette_RigidBody" instance=ExtResource("2_c4gmb")]
 
-[connection signal="body_entered" from="RedeemObjects/Baguette_RigidBody" to="RedeemObjects/Baguette_RigidBody" method="_on_RigidBody_body_entered"]
+[connection signal="body_entered" from="Baguette_RigidBody" to="Baguette_RigidBody" method="_on_RigidBody_body_entered"]
