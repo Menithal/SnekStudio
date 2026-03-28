@@ -76,6 +76,21 @@ ui_down={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="avatar"
+3d_physics/layer_2="props"
+3d_physics/layer_3="environment"
+3d_physics/layer_20="redeems_1"
+3d_physics/layer_21="redeems_2"
+3d_physics/layer_22="redeems_3"
+3d_physics/layer_23="redeems_4"
+
+[physics]
+
+3d/run_on_separate_thread=true
+3d/physics_engine="Jolt Physics"
+
 [rendering]
 
 textures/vram_compression/import_s3tc_bptc=true
