@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://btb2owoy71u5x"]
+
+[ext_resource type="Script" uid="uid://eydhiqmamprr" path="res://Mods/PhysicsRedeemObject/PhysicsRedeemController.gd" id="1_jp82d"]
+
+[node name="PhysicsRedeemController" type="Node3D"]
+script = ExtResource("1_jp82d")
+metadata/_custom_type_script = "uid://eydhiqmamprr"

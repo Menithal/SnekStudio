@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c47yi8ho64k6j"]
+
+[ext_resource type="Script" uid="uid://ceymurcbte5tw" path="res://Mods/PhysicsRedeemObject/ObjectBase/RedeemNode.gd" id="1_e86sk"]
+
+[node name="RedeemNode" type="Node3D"]
+script = ExtResource("1_e86sk")
+
+[node name="RedeemObjects" type="Node3D" parent="."]
