@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddknolhp44tcv"]
+
+[ext_resource type="PackedScene" uid="uid://cha5noj2us4mg" path="res://Mods/PhysicsRedeemObject/Objects/Baguette/BaguetteSplitB.glb" id="1_fmbi0"]
+[ext_resource type="Material" uid="uid://cml1op86jnupv" path="res://Mods/PhysicsRedeemObject/Objects/Baguette/BaguetteMaterial.tres" id="2_sh8mb"]
+
+[node name="BaguetteSplitB" instance=ExtResource("1_fmbi0")]
+
+[node name="BaguetteSplitB" parent="." index="0"]
+material_override = ExtResource("2_sh8mb")

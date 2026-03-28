@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://nuvdk10nh66t"]
+
+[ext_resource type="Script" uid="uid://b047iyo00jegd" path="res://Mods/PhysicsRedeemObject/ObjectBase/RedeemRigidBody.gd" id="1_lpuu7"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lpuu7"]
+
+[node name="RedeemRigidBody" type="RigidBody3D"]
+script = ExtResource("1_lpuu7")
+metadata/_custom_type_script = "uid://b047iyo00jegd"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_lpuu7")
+
+[connection signal="body_entered" from="." to="." method="_on_RigidBody_body_entered"]
