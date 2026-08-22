@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://tf7bffaimavb"]
+
+[ext_resource type="Script" uid="uid://b06akqarch41t" path="res://Mods/PhysicsRedeemObject/ObjectBase/RedeemNode.gd" id="1_8uv06"]
+[ext_resource type="PackedScene" uid="uid://ljvychvf5pka" path="res://Mods/PhysicsRedeemObject/Objects/Baguette/BaguetteWhole.glb" id="2_c4gmb"]
+[ext_resource type="Script" uid="uid://76owd28j5wxq" path="res://Mods/PhysicsRedeemObject/ObjectBase/RedeemRigidBody.gd" id="2_e781m"]
+[ext_resource type="PackedScene" uid="uid://0g3jbtihcu4c" path="res://Mods/PhysicsRedeemObject/Objects/Baguette/Baguette_OnCollision.tscn" id="3_xyq5a"]
+[ext_resource type="AudioStream" uid="uid://bwytog6nfi0nx" path="res://Mods/PhysicsRedeemObject/Objects/Baguette/Crumble.wav" id="4_a8cdt"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8uv06"]
+size = Vector3(0.12, 0.09, 0.8)
+
+[node name="BaguetteNode" type="Node3D" unique_id=652773582]
+script = ExtResource("1_8uv06")
+
+[node name="Baguette_RigidBody" type="RigidBody3D" parent="." unique_id=696754552]
+collision_layer = 524288
+collision_mask = 1572871
+contact_monitor = true
+max_contacts_reported = 5
+script = ExtResource("2_e781m")
+sticky = false
+random_spin_amount = 2.0
+collide_scene = ExtResource("3_xyq5a")
+clear_on_collision = true
+aim_at_avatar = true
+collision_sound = ExtResource("4_a8cdt")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Baguette_RigidBody" unique_id=470275973]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.015158653, 0)
+shape = SubResource("BoxShape3D_8uv06")
+
+[node name="BaguetteModel" parent="Baguette_RigidBody" unique_id=2145843561 instance=ExtResource("2_c4gmb")]
+
+[connection signal="body_entered" from="Baguette_RigidBody" to="Baguette_RigidBody" method="_on_RigidBody_body_entered"]

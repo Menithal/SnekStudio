@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://0g3jbtihcu4c"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://cytbmfb4r6wbp" path="res://Mods/PhysicsRedeemObject/Objects/Baguette/bread_mat_physics.tres" id="1_10hv2"]
+[ext_resource type="PackedScene" uid="uid://b31clt0eomdac" path="res://Mods/PhysicsRedeemObject/Objects/Baguette/Mesh_BaguetteSplitA.tscn" id="1_qych5"]
+[ext_resource type="PackedScene" uid="uid://ddknolhp44tcv" path="res://Mods/PhysicsRedeemObject/Objects/Baguette/Mesh_BaguetteSplitB.tscn" id="2_10hv2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6s8u3"]
+size = Vector3(0.1, 0.05, 0.4)
+
+[node name="BaguetteOnCollision" type="Node3D" unique_id=1733617465]
+
+[node name="Split_1" type="RigidBody3D" parent="." unique_id=504393846]
+collision_layer = 1048576
+collision_mask = 1048583
+physics_material_override = ExtResource("1_10hv2")
+
+[node name="BaguetteSplitA2" parent="Split_1" unique_id=159067976 instance=ExtResource("1_qych5")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Split_1" unique_id=1934783103]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.20243323)
+shape = SubResource("BoxShape3D_6s8u3")
+
+[node name="Split_2" type="RigidBody3D" parent="." unique_id=565444263]
+collision_layer = 1048576
+collision_mask = 1048583
+physics_material_override = ExtResource("1_10hv2")
+
+[node name="BaguetteSplitB2" parent="Split_2" unique_id=874576787 instance=ExtResource("2_10hv2")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Split_2" unique_id=1226155987]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.20099692)
+shape = SubResource("BoxShape3D_6s8u3")
