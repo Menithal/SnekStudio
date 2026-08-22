@@ -12,18 +12,18 @@ height = 0.22
 resource_local_to_scene = true
 radius = 0.11
 
-[node name="AvatarCollider" type="BoneAttachment3D" unique_id=1250149762]
+[node name="AvatarCollider" type="BoneAttachment3D" unique_id=893206134]
 bone_name = "Head"
 script = ExtResource("1_e26wh")
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=275919757]
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=247765701]
 collision_mask = 2
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D" unique_id=1788979179]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D" unique_id=1504777575]
 visible = false
 mesh = SubResource("SphereMesh_muviq")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("2_w6emv")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=1899529431]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=2028475936]
 shape = SubResource("SphereShape3D_ptt4o")

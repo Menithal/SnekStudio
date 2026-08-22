@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://dnd0khvny4e7w"]
+
+[ext_resource type="Script" uid="uid://b06akqarch41t" path="res://Mods/PhysicsRedeemObject/ObjectBase/RedeemNode.gd" id="1_r5nq0"]
+[ext_resource type="Script" uid="uid://76owd28j5wxq" path="res://Mods/PhysicsRedeemObject/ObjectBase/RedeemRigidBody.gd" id="2_1hlvd"]
+[ext_resource type="AudioStream" uid="uid://drmxnvpbaqwpy" path="res://Mods/PhysicsRedeemObject/Objects/Kisser/Kiss.wav" id="3_5l2yu"]
+[ext_resource type="PackedScene" uid="uid://bixxp3sti68mj" path="res://Mods/PhysicsRedeemObject/Objects/Kisser/Kisser_Rig.tscn" id="3_rnbcn"]
+[ext_resource type="AudioStream" uid="uid://cx5cxk4but1rm" path="res://Mods/PhysicsRedeemObject/Objects/Kisser/Wee.wav" id="4_31f7n"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5l2yu"]
+radius = 0.05
+height = 0.3
+
+[node name="KisserNode" type="Node3D" unique_id=194405607]
+script = ExtResource("1_r5nq0")
+
+[node name="RedeemRigidBody" type="RigidBody3D" parent="." unique_id=947918285 node_paths=PackedStringArray("physical_bone_sim", "reparent_node")]
+collision_layer = 524288
+collision_mask = 1572871
+script = ExtResource("2_1hlvd")
+aim_at_avatar = true
+look_at_avatar = true
+randomized_pitch = 0.88
+collision_sound = ExtResource("3_5l2yu")
+physical_bone_sim = NodePath("Kisser/Skeleton3D/PhysicalBoneSimulator3D")
+reparent_node = NodePath("Kisser")
+metadata/_custom_type_script = "uid://76owd28j5wxq"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="RedeemRigidBody" unique_id=352963942]
+stream = ExtResource("4_31f7n")
+autoplay = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RedeemRigidBody" unique_id=276514131]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.107051045, 0)
+shape = SubResource("CapsuleShape3D_5l2yu")
+
+[node name="Kisser" parent="RedeemRigidBody" unique_id=533639384 instance=ExtResource("3_rnbcn")]
+
+[node name="Physical Bone LeftArm" parent="RedeemRigidBody/Kisser/Skeleton3D/PhysicalBoneSimulator3D" parent_id_path=PackedInt32Array(533639384, 240582344) index="6" unique_id=882530757]
+transform = Transform3D(0.0090861535, -3.3825984e-08, -0.9999587, 1.3957459e-06, -1, 4.650986e-08, -0.99995875, -1.3961109e-06, -0.009086153, 0.08781527, 0.11579221, 0.0001938984)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5588056e-08, 0.0011558953, 0.021328628)
+body_offset = Transform3D(1.0000002, 5.603897e-08, -4.015863e-06, -4.013069e-06, 1.8918993e-07, -1.0000004, 1.753699e-08, 1.0000001, 1.173973e-07, 0, 0.021328636, -0.001155898)
+
+[node name="Physical Bone LeftForeArm" parent="RedeemRigidBody/Kisser/Skeleton3D/PhysicalBoneSimulator3D" parent_id_path=PackedInt32Array(533639384, 240582344) index="7" unique_id=2112052755]
+transform = Transform3D(-1.266598e-07, -3.6131752e-08, -1, 1.3962501e-06, -1, 3.6131574e-08, -1, -1.3962501e-06, 1.2665986e-07, 0.13047336, 0.11579221, 0.00038809175)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1520725e-07, 0.0011558954, 0.021330334)
+body_offset = Transform3D(1.0000001, 5.5282158e-08, 1.8625457e-09, 8.526513e-14, 1.8732398e-07, -1.0000004, 1.7637603e-08, 1.0000001, 1.1486558e-07, -3.153109e-07, 0.021330342, -0.001155898)
+
+[node name="Physical Bone RightArm" parent="RedeemRigidBody/Kisser/Skeleton3D/PhysicalBoneSimulator3D" parent_id_path=PackedInt32Array(533639384, 240582344) index="9" unique_id=2071681817]
+transform = Transform3D(0.0090861535, 3.3825984e-08, 0.9999587, -1.3957459e-06, -1, 4.650986e-08, 0.99995875, -1.3961109e-06, -0.009086153, -0.08781527, 0.11579221, 0.0001938984)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5588056e-08, 0.0011558953, 0.021328628)
+body_offset = Transform3D(1.0000002, -5.603897e-08, 4.015863e-06, 4.013069e-06, 1.8918993e-07, -1.0000004, -1.753699e-08, 1.0000001, 1.173973e-07, 0, 0.021328636, -0.001155898)
+
+[node name="Physical Bone RightForeArm" parent="RedeemRigidBody/Kisser/Skeleton3D/PhysicalBoneSimulator3D" parent_id_path=PackedInt32Array(533639384, 240582344) index="10" unique_id=2077463888]
+transform = Transform3D(-1.266598e-07, 3.6131752e-08, 1, -1.3962501e-06, -1, 3.6131574e-08, 1, -1.3962501e-06, 1.2665986e-07, -0.13047336, 0.11579221, 0.00038809175)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1520725e-07, 0.0011558954, 0.021330334)
+body_offset = Transform3D(1.0000001, -5.5282158e-08, -1.8625457e-09, -8.526513e-14, 1.8732398e-07, -1.0000004, -1.7637603e-08, 1.0000001, 1.1486558e-07, 3.153109e-07, 0.021330342, -0.001155898)
+
+[node name="Physical Bone LeftLeg" parent="RedeemRigidBody/Kisser/Skeleton3D/PhysicalBoneSimulator3D" parent_id_path=PackedInt32Array(533639384, 240582344) index="12" unique_id=1914841875]
+transform = Transform3D(0.055513024, -0.9983696, -0.013285261, 0.10202301, -0.007564283, 0.9947533, -0.9932319, -0.056577165, 0.10143676, 0.037972312, -0.102295645, -0.0069241845)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.7380966e-08, 5.0843136e-07, 0.029242255)
+body_offset = Transform3D(0.99999386, 1.3325363e-05, 8.791685e-07, 5.5134296e-07, -1.3336539e-06, -0.99999976, -1.3317913e-05, 0.99998987, -4.4330955e-07, 3.1664968e-08, 0.029242247, -4.954636e-07)
+
+[node name="Physical Bone LeftFoot" parent="RedeemRigidBody/Kisser/Skeleton3D/PhysicalBoneSimulator3D" parent_id_path=PackedInt32Array(533639384, 240582344) index="13" unique_id=1392183138]
+transform = Transform3D(0.07016665, -0.9975353, -7.3215774e-06, -0.99753535, -0.07016665, -2.1349406e-06, 1.6159481e-06, 7.453333e-06, -1, 0.038360484, -0.13138326, 0.012668723)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1720666e-08, 1.5344755e-08, 0.022559052)
+body_offset = Transform3D(0.99999976, 3.1293416e-07, 3.0229523e-07, -5.279527e-07, -4.56007e-08, -0.99999356, 1.2876393e-11, 0.9999898, -5.1506186e-07, 1.4901161e-08, 0.022558907, -3.7252903e-09)
+
+[node name="Physical Bone RightLeg" parent="RedeemRigidBody/Kisser/Skeleton3D/PhysicalBoneSimulator3D" parent_id_path=PackedInt32Array(533639384, 240582344) index="15" unique_id=1345993008]
+transform = Transform3D(0.055513024, 0.9983696, 0.013285261, -0.10202301, -0.007564283, 0.9947533, 0.9932319, -0.056577165, 0.10143676, -0.037972312, -0.102295645, -0.0069241845)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7380966e-08, 5.0843136e-07, 0.029242255)
+body_offset = Transform3D(0.99999386, -1.3325363e-05, -8.791685e-07, -5.5134296e-07, -1.3336539e-06, -0.99999976, 1.3317913e-05, 0.99998987, -4.4330955e-07, -3.1664968e-08, 0.029242247, -4.954636e-07)
+
+[node name="Physical Bone RightFoot" parent="RedeemRigidBody/Kisser/Skeleton3D/PhysicalBoneSimulator3D" parent_id_path=PackedInt32Array(533639384, 240582344) index="16" unique_id=441614134]
+transform = Transform3D(0.07016665, 0.9975353, 7.3215774e-06, 0.99753535, -0.07016665, -2.1349406e-06, -1.6159481e-06, 7.453333e-06, -1, -0.038360484, -0.13138326, 0.012668723)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1720666e-08, 1.5344755e-08, 0.022559052)
+body_offset = Transform3D(0.99999976, -3.1293416e-07, -3.0229523e-07, 5.279527e-07, -4.56007e-08, -0.99999356, -1.2876393e-11, 0.9999898, -5.1506186e-07, -1.4901161e-08, 0.022558907, -3.7252903e-09)
+
+[node name="Physical Bone Tail2" parent="RedeemRigidBody/Kisser/Skeleton3D/PhysicalBoneSimulator3D" parent_id_path=PackedInt32Array(533639384, 240582344) index="18" unique_id=1442375740]
+transform = Transform3D(1, 2.3841858e-07, 6.661328e-15, -1.6010266e-07, 0.67151916, 0.74098724, 1.7666513e-07, -0.74098724, 0.67151916, -1.3779443e-10, -0.04374806, -0.09617604)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3779296e-10, 6.1379395e-09, 0.034325838)
+body_offset = Transform3D(1, 0, 4.973799e-14, 4.2632564e-14, -1.7881393e-07, -1, 0, 0.99999976, -1.7881393e-07, -1.3779466e-10, 0.034325838, 0)
+
+[editable path="RedeemRigidBody/Kisser"]
